@@ -1,0 +1,28 @@
+﻿@model BankingManagement.Models.ViewModels.CustomerListViewModel
+@{
+    ViewBag.Title = "Details";
+}
+<h3>Customer Details Information</h3>
+<div>
+    @Html.HiddenFor(model => model.CustomerId)
+
+    <dl>
+        <dt>@Html.DisplayNameFor(model => model.CustomerName)</dt>
+        <dd>@Html.DisplayFor(model => model.CustomerName)</dd>
+    </dl>
+    <dl>
+        <dt>@Html.DisplayNameFor(model => model.CreateDate)</dt>
+        <dd>@Html.DisplayFor(model => model.CreateDate)</dd>
+    </dl>
+    <dl>
+        <dt>@Html.DisplayNameFor(model => model.ImageName)</dt>
+        <dd>@Html.DisplayFor(model => model.ImageName)</dd>
+    </dl>
+    <dl>
+        <dt>@Html.DisplayNameFor(model => model.ImageUrl)</dt>
+        <dd><img src="@Url.Content(Model.ImageUrl)" width="50" height="50" /></dd>
+    </dl>
+
+    @Html.ActionLink("Back to Customer List", "Index")
+</div>
+

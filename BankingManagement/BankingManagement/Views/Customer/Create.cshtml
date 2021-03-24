@@ -1,0 +1,100 @@
+﻿@model BankingManagement.Models.ViewModels.CreateCustomerViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<h2>Create</h2>
+@using (Html.BeginForm("AddOrEdit", "Customer", FormMethod.Post, new { @enctype = "multipart/form-data", @id = "Submit" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create New Customer</h4>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(model => model.CreateDate, "{0:MM/dd/yyyy}", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.CustAccountId, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CustAccountId, new SelectList(Model.CustAccList, "Id", "AccountType"), "Select Account Type")
+            @Html.ValidationMessageFor(model => model.CustAccountId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.ImageUrl, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-2">
+            <img src="~/Images/@Model.ImageUrl" width="40" height="50" class="change_edit" alt="Alternate Text" />
+            <input type="file" name="ImageFile" class="form-control changeImage" required />
+            @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.CheckBoxFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-success" />
+        </div>
+        @Html.ActionLink("Back to Customer List", "Index")
+    </div>
+}
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+
+<script src="~/Scripts/jquery-ui.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#CreateDate").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+    })
+    $(function () {
+        $('.changeImage').change(function () {
+            var input = this;
+            if (input.files) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(".change_edit").attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0])
+            }
+            else {
+                $(".change_edit").attr('src', '/Images/@Model.ImageUrl');
+            }
+        })
+    })
+</script>
+
